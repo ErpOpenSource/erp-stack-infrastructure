@@ -1,0 +1,22 @@
+# --- Base de Datos y Persistencia ---
+**/postgres_data/
+**/redis_data/
+*.dump
+*.sql.gz
+
+# --- Secretos y Configuración ---
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# --- Docker ---
+.docker/
+*.log
+
+# --- OS & IDE ---
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db

@@ -1,16 +1,49 @@
-# ERP Infrastructure Stack
+🚀 ERP Infrastructure Stack
 
-Este repositorio gestiona la infraestructura necesaria para el funcionamiento del ERP, utilizando un enfoque de **Infraestructura como Código (IaC)**.
+Infrastructure as Code (IaC) repository for the Open Source ERP ecosystem.
+This project manages the core persistence and caching layers with a focus on high availability and observability.
 
-## 🛠 Tecnologías Principales
-* **Base de Datos:** PostgreSQL (Persistencia de datos)
-* **Caché/Queues:** Redis (Rendimiento y mensajería)
-* **Orquestación:** [Pendiente decidir: Docker Compose / Kubernetes]
+🛠 Components
 
-## 🏗 Arquitectura de Escalabilidad
-Para garantizar que el ERP crezca sin fricciones:
-1. **PostgreSQL:** Configuración pensada para futuras réplicas de lectura.
-2. **Redis:** Implementación preparada para modo Cluster o Sentinel.
+PostgreSQL 16 (Alpine):
+Relational database with native support for uuid-ossp and unaccent extensions.
 
-## 🚀 Despliegue Rápido
-(Aquí añadiremos los comandos conforme definamos las herramientas en el siguiente paso).
+Redis 7 (Alpine):
+High-performance cache and message queue management with AOF persistence.
+
+Exporters:
+Native Prometheus exporters for real-time infrastructure monitoring.
+
+🚀 Deployment
+1️⃣ Create the shared network
+
+The stack communicates through a global Docker network.
+
+docker network create erp-platform
+2️⃣ Configure environment variables
+
+Create your local .env file from the template:
+
+cp .env.example .env
+3️⃣ Spin up the stack
+
+Run the containers in detached mode:
+
+docker compose up -d
+📊 Observability
+
+This stack is fully integrated with the erp-observability-platform.
+
+Logs: Automatically forwarded to Loki via the Docker json-file driver.
+
+Database Metrics: Scraped from erp_postgres_exporter:9187.
+
+Cache Metrics: Scraped from erp_redis_exporter:9121.
+
+⚙️ Maintenance Commands
+Access Database
+docker exec -it erp_postgres psql -U erp_admin -d erp_main_db
+Check Redis Health
+docker exec -it erp_redis redis-cli -a ${REDIS_PASSWORD} ping
+Follow Logs
+docker compose logs -f
