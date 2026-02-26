@@ -1,4 +1,4 @@
-# 🚀 ERP Infrastructure Stack
+🚀 ERP Infrastructure Stack
 
 Infrastructure as Code (IaC) repository for the Open Source ERP ecosystem.
 This project manages the core persistence and caching layers with a focus on high availability and observability.
